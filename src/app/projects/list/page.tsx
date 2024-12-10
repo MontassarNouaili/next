@@ -93,7 +93,7 @@ export default function ProjectsList() {
   };
 
   return (
-    <div className="w-full px-2 lg:px-0 lg:max-w-4xl py-4 mx-auto">
+    <div className="w-full px-2 lg:px-0 lg:max-w-4xl py-4 mx-auto dark:text-black">
       <div className="flex flex-col bg-gradient-to-r from-lime-50 to-blue-50 rounded-lg px-8 py-4 border border-gray-500">
         <h1 className="mx-auto font-semibold text-4xl my-5 text-cyan-800">
           Projects List
@@ -150,7 +150,7 @@ export default function ProjectsList() {
         </div>
       </div>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] bg-gradient-to-r from-orange-50 to-blue-50 dark:text-black">
           <DialogHeader>
             <DialogTitle className="text-2xl">Update Project</DialogTitle>
             <DialogDescription>
@@ -190,7 +190,7 @@ export default function ProjectsList() {
               onClick={updateProject}
               className="bg-cyan-800 text-white px-6 py-3 rounded-md"
             >
-              Submit
+              Save
             </button>
           </DialogFooter>
         </DialogContent>

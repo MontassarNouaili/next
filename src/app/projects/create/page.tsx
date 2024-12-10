@@ -19,13 +19,15 @@ export default function CreateProject() {
     } catch (err) {
       if (err instanceof AxiosError) {
         console.log(err);
-        toast.error(err.response?.data?.error);
+        if (err.response?.data?.error) toast.error(err.response?.data?.error);
+        if (err.response?.data?.errors)
+          toast.error(err.response?.data?.errors[0]);
       }
     }
   };
 
   return (
-    <div className="w-full px-2 lg:px-0 lg:max-w-4xl py-4 mx-auto">
+    <div className="w-full px-2 lg:px-0 lg:max-w-4xl py-4 mx-auto dark:text-black">
       <div className="flex flex-col bg-gradient-to-r from-orange-50 to-blue-50 rounded-lg px-8 py-4 border border-gray-500">
         <h1 className="mx-auto font-semibold text-4xl my-5 text-cyan-800">
           Create Project

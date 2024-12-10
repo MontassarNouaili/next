@@ -1,8 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+  const [token, setToken] = useState<string | null>();
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
   return (
     <header className="w-full bg-white shadow text-cyan-800 font-semibold">
       <div className="w-full lg:max-w-4xl mx-auto flex justify-between items-center px-2">
@@ -23,6 +28,26 @@ export default function Header() {
           <Link href={"/projects/create"} className="hover:underline text-xl">
             Create project
           </Link>
+          {!token ? (
+            <>
+              <Link href={"/auth/login"} className="hover:underline text-xl">
+                Login
+              </Link>{" "}
+              <Link href={"/auth/register"} className="hover:underline text-xl">
+                Register
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                localStorage.removeItem("token");
+                setToken("");
+              }}
+              className="hover:underline text-xl text-red-600"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </header>

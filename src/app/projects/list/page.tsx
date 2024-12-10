@@ -24,7 +24,7 @@ export default function ProjectsList() {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-
+  const token = localStorage.getItem("token");
   const fetchProjects = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/projects");
@@ -50,7 +50,12 @@ export default function ProjectsList() {
       } catch (err) {
         if (err instanceof AxiosError) {
           console.log(err);
-          toast.error(err.response?.data?.error);
+          if (err.response?.data?.error) toast.error(err.response?.data?.error);
+          else if (err.response?.data?.errors)
+            toast.error(err.response?.data?.errors[0]);
+          else if (err.response?.data?.code === 401)
+            toast.error("Login to update/delete project");
+          else toast.error("Problem updating project");
         }
       }
     } else {
@@ -69,6 +74,12 @@ export default function ProjectsList() {
         {
           name,
           description,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
       setProjects((prev) => {
@@ -87,7 +98,12 @@ export default function ProjectsList() {
     } catch (err) {
       if (err instanceof AxiosError) {
         console.log(err);
-        toast.error(err.response?.data?.error);
+        if (err.response?.data?.error) toast.error(err.response?.data?.error);
+        else if (err.response?.data?.errors)
+          toast.error(err.response?.data?.errors[0]);
+        else if (err.response?.data?.code === 401)
+          toast.error("Login to update/delete project");
+        else toast.error("Problem updating project");
       }
     }
   };
@@ -98,7 +114,7 @@ export default function ProjectsList() {
         <h1 className="mx-auto font-semibold text-4xl my-5 text-cyan-800">
           Projects List
         </h1>
-        <div className="w-full mb-4 border-b-0 border border-cyan-800 rounded-md text-lg">
+        <div className="w-full mb-4 border-b-0 border border-cyan-800 rounded-md text-lg overflow-x-auto">
           <div className="flex w-full border-b border-cyan-800">
             <div className="w-[10%] shrink-0 px-3 py-2 font-semibold">Id</div>
             <div className="w-[20%] shrink-0 px-3 py-2 font-semibold">Name</div>
